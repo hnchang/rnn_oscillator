@@ -2,7 +2,7 @@
 """
 Created on Fri Dec 27 14:10:58 2019
 
-@author: hplgit / James
+@author: hplgit / jct
 @source: https://github.com/hplgit/bumpy
 """
 import numpy as np
