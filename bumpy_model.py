@@ -2,7 +2,7 @@
 """
 Created on Fri Dec 27 15:16:48 2019
 
-@author: hplgit / James
+@author: hplgit / jct
 """
 
 import sys

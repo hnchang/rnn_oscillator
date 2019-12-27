@@ -2,7 +2,7 @@
 """
 Created on Fri Dec 27 12:52:42 2019
 
-@author: hplgit / James
+@author: hplgit / jct
 """
 
 import numpy as np
