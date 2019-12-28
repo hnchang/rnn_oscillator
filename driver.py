@@ -16,8 +16,8 @@ if __name__ == '__main__':
     
     # Input parameters as arguments here.
     # Assume units in M.K.S.
-    generate_bumpy_roads(L=500, nroads=10, resolution=200)
-    data = bumpy_model(m=60, b=80, k=60, v=5)
+    generate_bumpy_roads(L=500, nroads=200, resolution=10)
+    data = bumpy_model(m=60, b=25, k=60, v=5)
     
     # Root mean square values
     u_rms = [np.sqrt((1./len(u))*np.sum(u**2))
@@ -41,31 +41,58 @@ if __name__ == '__main__':
     # ==============================
     # Post-processing
     # Plot u for second realization
-    realization = 1
-    u = data[2+realization][2][:]
-    plt.plot(t, u)
-    plt.title('Displacement')
+#    realization = 1
+#    u = data[2+realization][2][:]
+#    plt.plot(t, u)
+#    plt.title('Displacement')
+#
+#    
+#    # Compute and plot velocity in second realization
+#    dt = t[1] - t[0]
+#    v = np.zeros_like(u)
+#    v[1:-1] = (u[2:] - u[:-2])/(2*dt)
+#    
+#    # Estimate the starting and end velocity
+#    v[0] = (u[1] - u[0])/dt
+#    v[-1] = (u[-1] - u[-2])/dt
+#    
+#    plt.figure()
+#    plt.plot(t, v)
+#    plt.legend(['velocity'])
+#    plt.xlabel('t')
+#    plt.title('Velocity')
+    
+    
+#    # Smooth the velocity (only internal points)
+#    v[1:-1] = (v[2:] + 2*v[1:-1] + v[:-2])/4.0
+#    plt.figure()
+#    plt.plot(t, v)
+#    plt.legend(['smoothed velocity'])
+#    plt.xlabel('t')
+#    plt.title('Velocity')
+    
+    
+#    
+    for realization in range(5):# len(data[2:])
+        h, F, u = data[2+realization]
 
-    
-    # Compute and plot velocity in second realization
-    dt = t[1] - t[0]
-    v = np.zeros_like(u)
-    v[1:-1] = (u[2:] - u[:-2])/(2*dt)
-    v[0] = (u[1] - u[0])/dt
-    v[-1] = (u[-1] - u[-2])/dt
-    plt.figure()
-    plt.plot(t, v)
-    plt.legend(['velocity'])
-    plt.xlabel('t')
-    plt.title('Velocity')
-    
-    
-    # Smooth the velocity (only internal points)
-    v[1:-1] = (v[2:] + 2*v[1:-1] + v[:-2])/4.0
-    plt.figure()
-    plt.plot(t, v)
-    plt.legend(['smoothed velocity'])
-    plt.xlabel('t')
-    plt.title('Velocity')
+        plt.figure()
+        plt.subplot(3, 1, 1)
+        plt.plot(x, h, 'g-')
+        plt.legend(['h %d' % realization])
+        hmax = (abs(h.max()) + abs(h.min()))/2
+        plt.axis([x[0], x[-1], -hmax*5, hmax*5])
+        plt.xlabel('distance'); plt.ylabel('height')
+
+        plt.subplot(3, 1, 2)
+        plt.plot(t, F)
+        plt.legend(['F %d' % realization])
+        plt.xlabel('t'); plt.ylabel('acceleration')
+
+        plt.subplot(3, 1, 3)
+        plt.plot(t, u, 'r-')
+        plt.legend(['u %d' % realization])
+        plt.xlabel('t'); plt.ylabel('displacement')
+
     
     plt.show()
